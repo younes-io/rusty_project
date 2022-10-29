@@ -20,15 +20,13 @@ jobs:
         run: |
           rustup update
           rustup component add clippy
-          rustup install stable    
-          cargo install cargo-tarpaulin
+          rustup install stable
 
       - name: Toolchain info
         run: |
           cargo --version --verbose
           rustc --version
           cargo clippy --version  
-          cargo tarpaulin --version
 
       - name: Lint
         run: |
@@ -43,6 +41,8 @@ jobs:
 
       - name: Coverage
         run: |
+          cargo tarpaulin --version
+          cargo install cargo-tarpaulin
           cargo tarpaulin --ignore-tests
           
       - name: Build
