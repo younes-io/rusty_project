@@ -32,22 +32,19 @@ jobs:
 
       - name: Lint
         run: |
-          cd rusty_project
+          ls
           cargo fmt -- --check
           cargo clippy -- -D warnings          
 
       - name: Test
         run: |
-          cd rusty_project
           cargo check
           cargo test --all          
 
       - name: Coverage
         run: |
-          cd rusty_project
           cargo tarpaulin --ignore-tests
           
       - name: Build
         run: |
-          cd rusty_project
           cargo build --release      
