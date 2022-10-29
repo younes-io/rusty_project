@@ -1,0 +1,53 @@
+name: Rust
+
+on:
+  push:
+    branches: [ "main", 'feature-**' ]
+  pull_request:
+    branches: [ "main", 'feature-**' ]
+
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+
+  test_rusty_project:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Update local toolchain
+        run: |
+          rustup update
+          rustup component add clippy
+          rustup install stable    
+          cargo install cargo-tarpaulin
+
+      - name: Toolchain info
+        run: |
+          cargo --version --verbose
+          rustc --version
+          cargo clippy --version  
+          cargo tarpaulin --version
+
+      - name: Lint
+        run: |
+          cd rusty_project
+          cargo fmt -- --check
+          cargo clippy -- -D warnings          
+
+      - name: Test
+        run: |
+          cd rusty_project
+          cargo check
+          cargo test --all          
+
+      - name: Coverage
+        run: |
+          cd rusty_project
+          cargo tarpaulin --ignore-tests
+          
+      - name: Build
+        run: |
+          cd rusty_project
+          cargo build --release      
