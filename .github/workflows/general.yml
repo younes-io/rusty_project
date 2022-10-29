@@ -41,8 +41,8 @@ jobs:
 
       - name: Coverage
         run: |
-          cargo tarpaulin --version
           cargo install cargo-tarpaulin
+          cargo tarpaulin --version
           cargo tarpaulin --ignore-tests
           
       - name: Build
